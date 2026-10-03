@@ -1,0 +1,46 @@
+{
+  "sampleRate": 48000,
+  "duration": 10.3,
+  "bpm": 120,
+  "key": "A minor",
+  "beatZero": 0.34,
+  "filter": { "closedHz": 440, "openAt": 7.3, "sweep": [7.24, 7.36] },
+  "hits": { "intro": 0.34, "explosion": 4.88, "collapse": 6.5, "finale": 9.34 },
+  "chords": [
+    { "start": 0.34, "end": 1.34, "notes": [57, 60, 64], "bass": 45 },
+    { "start": 1.34, "end": 3.34, "notes": [57, 60, 64], "bass": 45 },
+    { "start": 3.34, "end": 5.34, "notes": [53, 57, 60], "bass": 41 },
+    { "start": 5.34, "end": 6.34, "notes": [55, 59, 62], "bass": 43 },
+    { "start": 6.34, "end": 7.34, "notes": [52, 56, 59], "bass": 40 },
+    { "start": 7.34, "end": 8.34, "notes": [57, 60, 64], "bass": 45 },
+    { "start": 8.34, "end": 8.84, "notes": [53, 57, 60], "bass": 41 },
+    { "start": 8.84, "end": 9.34, "notes": [55, 59, 62], "bass": 43 }
+  ],
+  "drop": {
+    "start": 7.34,
+    "stepSeconds": 0.125,
+    "tracks": {
+      "kick": [0, 4, 8, 10, 12],
+      "snare": [4, 12],
+      "clap": [4, 12],
+      "hatClosed": [0, 1, 3, 4, 5, 7, 8, 9, 11, 12],
+      "hatOpen": [2, 6, 10, 14],
+      "perc": [3, 9, 11],
+      "tomLow": [13],
+      "tomMid": [14],
+      "tomHigh": [15],
+      "crash": [0]
+    }
+  },
+  "pads": {
+    "kick": { "pads": [1, 2], "mode": "all", "color": "gold" },
+    "snare": { "pads": [5], "mode": "all", "color": "pink" },
+    "clap": { "pads": [6], "mode": "all", "color": "pink" },
+    "tomLow": { "pads": [4], "mode": "all", "color": "pink" },
+    "tomMid": { "pads": [7], "mode": "all", "color": "pink" },
+    "tomHigh": { "pads": [11], "mode": "all", "color": "pink" },
+    "perc": { "pads": [0, 3], "mode": "cycle", "color": "cyan" },
+    "hatOpen": { "pads": [8, 9, 10], "mode": "cycle", "color": "cyan" },
+    "hatClosed": { "pads": [12, 13, 14, 15], "mode": "cycle", "color": "cyan" }
+  }
+}
