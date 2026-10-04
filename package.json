@@ -15,7 +15,8 @@
     "zerna:stills": "node scripts/zerna-stills.mjs",
     "zerna:music": "python3 scripts/zerna-tail.py",
     "zerna2:assets": "python3 scripts/zerna2-wood.py && python3 scripts/zerna2-paper.py && python3 scripts/zerna-tail.py --src public/zerna2/music.wav --dst public/zerna2/music-tail.wav --hit 12.10 12.60 --wet-from 12.45 --bpm 150",
-    "zerna2:render": "remotion render Zerna2 renders/zerna-teaser-2.mp4 --color-space=bt709"
+    "zerna2:render": "remotion render Zerna2 renders/zerna-teaser-2.mp4 --color-space=bt709",
+    "zerna2:check": "node scripts/zerna2-check.mjs renders/zerna-teaser-2.mp4"
   },
   "dependencies": {
     "@react-three/fiber": "^9.8.1",

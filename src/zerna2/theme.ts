@@ -30,11 +30,11 @@ export type Text2 = {
   sub: string;
 };
 
-// Draft for the storyboard (tone "whisper", formal "ви").
+// Approved text (tone "whisper", formal "ви"); the question repeats teaser 1 so the posts read as a series.
 export const TEXT2: Text2 = {
   poster: "ВАРТУЄ УВАГИ",
-  line1: "ВИ ВЖЕ",
-  line2: "ПОМІТИЛИ?",
+  line1: "А ВИ",
+  line2: "ГОТОВІ?",
   row: "КЛУБНЕ МІСТЕЧКО · КАРПАТИ",
   cta: "ДІЗНАЙТЕСЯ ПЕРШИМИ",
   sub: "посилання в шапці профілю",
