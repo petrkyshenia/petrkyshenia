@@ -17,7 +17,7 @@ export const Teaser: React.FC<TeaserProps> = ({ variant, picture, music }) => {
   return (
     <AbsoluteFill style={{ background: C.green }}>
       {frame < T.picture && <Words words={variant.words} />}
-      {frame >= T.picture && frame < T.logo + 8 && <Reveal picture={picture} reveal={variant.reveal} />}
+      {frame >= T.picture && frame < T.logo + 8 && <Reveal picture={picture} reveal={variant.reveal} facts={variant.facts} />}
       {frame >= T.logo - 4 && <Finale cta={variant.cta} sub={variant.sub} />}
       {music && <Audio src={staticFile("zerna/music.wav")} endAt={TRACK_END} />}
     </AbsoluteFill>

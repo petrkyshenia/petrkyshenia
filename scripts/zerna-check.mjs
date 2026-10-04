@@ -45,7 +45,7 @@ const vs = v.find((s) => s.codec_type === "video");
 const as = v.find((s) => s.codec_type === "audio");
 check(vs.width === 1080 && vs.height === 1920, "1080x1920", `${vs.width}x${vs.height}`);
 check(vs.r_frame_rate === "30/1", "30 fps", vs.r_frame_rate);
-check(Number(vs.nb_frames) === 413, "413 frames = 13.77 s", vs.nb_frames);
+check(Number(vs.nb_frames) === 450, "450 frames = 15 s", vs.nb_frames);
 check(vs.codec_name === "h264" && vs.pix_fmt === "yuv420p", "H.264 yuv420p", `${vs.codec_name} ${vs.pix_fmt}`);
 // limited range BT.709 with tags, so phones and Instagram show the brand colours as designed
 check(vs.color_range === "tv" && vs.color_space === "bt709", "BT.709, limited range", `${vs.color_space} ${vs.color_range}`);
