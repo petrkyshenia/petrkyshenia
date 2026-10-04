@@ -4,11 +4,8 @@ export const W = 1080;
 export const H = 1920;
 export const FPS = 30;
 
-/** Length of the reference track: 383 frames = 12.77 s. */
-export const TRACK_END = 383;
-/** Frames the logo + CTA hold after the music ends (silent tail): CTA stays ~3.2 s in total. */
-export const HOLD = 67;
-export const DURATION = TRACK_END + HOLD;
+/** 15 s: the track's last hit is at 11.83 s, its echo tail (music-tail.wav) fades out by 14.9 s. */
+export const DURATION = 450;
 
 // Brand book "Zerna Development", p. 13.
 export const C = {
@@ -39,10 +36,10 @@ export const T = {
   facts: [276, 301, 326] as const,
   leak: 304, // warm light leak, with "on the mountain top"
   streak: 336, // horizontal light streak
-  defocus: 342, // picture and last fact melt into green (replaces the dark ring)
-  logo: 348, // logo pulls into focus
-  hit: 354, // last hit of the track (11.83 s): CTA lands
-  sub: 364,
+  defocus: 350, // picture and last fact melt into green (replaces the dark ring); the fact keeps a full half-bar
+  logo: 354, // last hit of the track (11.83 s): logo lands with a soft flash
+  cta: 357, // CTA flickers in right after the logo
+  sub: 364, // sub line on the first echo of the hit (12.13 s)
 } as const;
 
 export type Variant = {

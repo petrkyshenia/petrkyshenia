@@ -66,9 +66,9 @@ export const Reveal: React.FC<{ picture: Picture; reveal: readonly string[]; fac
   // the reference lifts its footage out of black top-first over ~1 s
   const wipe = prog(frame, T.picture, T.picture + 28, (t) => t);
   const edge = interpolate(wipe, [0, 1], [-5, 140]);
-  const melt = prog(frame, T.defocus, T.logo + 8, inOut);
+  const melt = prog(frame, T.defocus, T.logo + 6, inOut);
   const blur = interpolate(melt, [0, 1], [14, 70]);
-  const push = interpolate(frame, [T.picture, T.logo + 8], [1, 1.07]);
+  const push = interpolate(frame, [T.picture, T.logo + 6], [1, 1.07]);
 
   const leak = prog(frame, T.leak - 8, T.leak + 6) * (1 - prog(frame, T.leak + 18, T.streak + 6, inOut));
   const streak = prog(frame, T.streak, T.streak + 3) * (1 - prog(frame, T.streak + 4, T.streak + 11));

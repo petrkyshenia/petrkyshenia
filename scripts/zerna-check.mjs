@@ -1,10 +1,10 @@
 // QA for the Zerna teaser against the reference reel.
-// Usage: node scripts/zerna-check.mjs <render.mp4> [silent.mp4] [reference.mp4]
+// Usage: node scripts/zerna-check.mjs <render.mp4> [reference.mp4]
 import { spawnSync } from "node:child_process";
 
-const [video, silent, reference = "zerna-teaser/reference/reference.mp4"] = process.argv.slice(2);
+const [video, reference = "zerna-teaser/reference/reference.mp4"] = process.argv.slice(2);
 if (!video) {
-  console.error("usage: node scripts/zerna-check.mjs <render.mp4> [silent.mp4] [reference.mp4]");
+  console.error("usage: node scripts/zerna-check.mjs <render.mp4> [reference.mp4]");
   process.exit(1);
 }
 
@@ -26,12 +26,20 @@ const cuts = (file) => {
   return y.flatMap((v, i) => (i > 0 && i < 232 && Math.abs(v - y[i - 1]) > 40 ? [i] : []));
 };
 
-/** Time of the first audible sample, in ms. */
-const onset = (file) => {
+/** Mono 48 kHz samples of the audio track. */
+const samples = (file) => {
   const pcm = run("ffmpeg", ["-v", "error", "-i", file, "-ac", "1", "-ar", "48000", "-f", "s16le", "-"], { encoding: "buffer" }).stdout;
-  const s = new Int16Array(pcm.buffer, pcm.byteOffset, pcm.byteLength >> 1);
-  const i = s.findIndex((v) => Math.abs(v) > 330); // about -40 dBFS
-  return (i / 48000) * 1000;
+  return new Int16Array(pcm.buffer, pcm.byteOffset, pcm.byteLength >> 1);
+};
+
+/** Time of the first audible sample, in ms. */
+const onset = (s) => (s.findIndex((v) => Math.abs(v) > 330) / 48000) * 1000; // about -40 dBFS
+
+/** RMS level of [from, to) seconds, dBFS. */
+const level = (s, from, to) => {
+  const part = s.subarray(Math.round(from * 48000), Math.round(to * 48000));
+  const ms = part.reduce((acc, v) => acc + (v / 32768) ** 2, 0) / Math.max(1, part.length);
+  return 10 * Math.log10(ms + 1e-12);
 };
 
 const loudness = (file) => {
@@ -57,17 +65,16 @@ check(ref.join() === ours.join(), "word cuts and glitch strobe land on the refer
 if (ref.join() !== ours.join()) console.log(`   ref:  ${ref.join(" ")}\n   ours: ${ours.join(" ")}`);
 
 if (as) {
-  const d = onset(video) - onset(reference);
+  const s = samples(video);
+  const d = onset(s) - onset(samples(reference));
   check(Math.abs(d) <= 5, "music starts in sync with the reference", `${d.toFixed(1)} ms`);
+  // the track stops at its last hit (11.9 s); the echo tail must carry the CTA and die out before the loop
+  const tail = level(s, 11.95, 12.6);
+  const end = level(s, 14.9, 15);
+  check(tail > -40 && end < -60, "echo tail after the last hit, silent at the loop point", `${tail.toFixed(0)} / ${end.toFixed(0)} dBFS`);
   const { I, peak } = loudness(video);
   check(I >= -16 && I <= -12, "loudness -16…-12 LUFS", `${I} LUFS`);
   check(peak <= -0.5, "peak <= -0.5 dBFS", `${peak} dBFS`);
-}
-
-if (silent) {
-  const s = streams(silent);
-  check(!s.some((x) => x.codec_type === "audio"), "silent version has no audio track");
-  check(cuts(silent).join() === ref.join(), "silent version keeps the same cuts");
 }
 
 process.exit(failed ? 1 : 0);

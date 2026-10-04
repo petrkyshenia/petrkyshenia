@@ -10,9 +10,10 @@
     "render": "npm run music && remotion render OpusPromo renders/opus-5-5.mp4",
     "check": "node scripts/check.mjs renders/opus-5-5.mp4",
     "typecheck": "tsc --noEmit",
-    "zerna:render": "remotion render ZernaA renders/zerna-teaser-A.mp4 --color-space=bt709 && remotion render ZernaA renders/zerna-teaser-A-silent.mp4 --muted --color-space=bt709",
-    "zerna:check": "node scripts/zerna-check.mjs renders/zerna-teaser-A.mp4 renders/zerna-teaser-A-silent.mp4",
-    "zerna:stills": "node scripts/zerna-stills.mjs"
+    "zerna:render": "remotion render ZernaA renders/zerna-teaser-A.mp4 --color-space=bt709",
+    "zerna:check": "node scripts/zerna-check.mjs renders/zerna-teaser-A.mp4",
+    "zerna:stills": "node scripts/zerna-stills.mjs",
+    "zerna:music": "python3 scripts/zerna-tail.py"
   },
   "dependencies": {
     "@react-three/fiber": "^9.8.1",
