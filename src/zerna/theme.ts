@@ -67,6 +67,9 @@ export const TEXT: Variant = {
   sub: "посилання в шапці профілю",
 };
 
+/** Written over the blurred renders (videos and covers): the details come later. */
+export const HINT = "Деталі згодом…";
+
 export type Picture = {
   src: string;
   size: { w: number; h: number };

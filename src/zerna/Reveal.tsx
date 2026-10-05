@@ -1,5 +1,6 @@
 import { AbsoluteFill, interpolate, interpolateColors, random, useCurrentFrame } from "remotion";
 import { fitSize } from "./fonts";
+import { Hint } from "./Hint";
 import { Sweep } from "./Sweep";
 import { C, H, MURS, type Picture, T, W, easeIn, flicker, flickerFast, inOut, prog } from "./theme";
 
@@ -105,6 +106,7 @@ export const Reveal: React.FC<{ picture: Picture; reveal: readonly string[]; fac
               </div>
             ))}
         </div>
+        <Hint opacity={prog(frame, T.picture + 14, T.picture + 30, inOut)} />
       </AbsoluteFill>
 
       {/* horizontal light streak, as in the reference right before its exit */}

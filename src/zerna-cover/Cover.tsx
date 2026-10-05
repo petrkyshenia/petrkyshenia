@@ -24,6 +24,13 @@ const Logo: React.FC = () => (
   </div>
 );
 
+/** §7.4 subtitle plate over the blurred render: green, ivory e-Ukraine 32, radius 14, side padding 0.75 x line height. */
+const HintPlate: React.FC<{ text: string; centre: number }> = ({ text, centre }) => (
+  <div style={{ position: "absolute", top: centre, left: 0, right: 0, display: "flex", justifyContent: "center", transform: "translateY(-50%)" }}>
+    <div style={{ ...SUB, background: C.green, borderRadius: 14, padding: `14px ${Math.round(0.75 * 32 * 1.3)}px 12px` }}>{text}</div>
+  </div>
+);
+
 /** §7.5 CTA sticker: white, green e-Ukraine, radius 10, the arrow-down-swing doodle on the right. */
 const Sticker: React.FC<{ text: string; top: number }> = ({ text, top }) => (
   <div style={{ position: "absolute", top, left: 0, right: 0, display: "flex", justifyContent: "center" }}>
@@ -52,7 +59,7 @@ const Sticker: React.FC<{ text: string; top: number }> = ({ text, top }) => (
  * Teaser 1: composition A. The night genplan fills the lower part of the frame and fades into
  * brand green at the top (as in the kit's reel-5); question in Sunny Yellow, project line in ivory.
  */
-export const Cover1: React.FC<{ accent: string; title: readonly string[]; sub: string }> = ({ accent, title, sub }) => {
+export const Cover1: React.FC<{ accent: string; title: readonly string[]; sub: string; hint: string }> = ({ accent, title, sub, hint }) => {
   const ok = useFontsReady();
   const top = 740; // where the photo starts
   const ph = H - top;
@@ -83,6 +90,8 @@ export const Cover1: React.FC<{ accent: string; title: readonly string[]; sub: s
             ))}
             <div style={{ ...SUB, marginTop: 22 }}>{sub}</div>
           </div>
+          {/* on the blurred houses, inside the profile-grid crop */}
+          <HintPlate text={hint} centre={1310} />
         </>
       )}
     </AbsoluteFill>
@@ -93,7 +102,7 @@ export const Cover1: React.FC<{ accent: string; title: readonly string[]; sub: s
  * Teaser 2: composition B. Green rhombus background (§7.2: covers), the one yellow plate on the
  * posters' line, the genplan in a photo card (radius 32), the CTA sticker under it.
  */
-export const Cover2: React.FC<{ plate: string; title: readonly string[]; cta: string }> = ({ plate, title, cta }) => {
+export const Cover2: React.FC<{ plate: string; title: readonly string[]; cta: string; hint: string }> = ({ plate, title, cta, hint }) => {
   const ok = useFontsReady();
   const card = { top: 840, w: W - 2 * MARGIN, h: 680 };
   // genplan 2000x1123: fill the card, centred on the houses and the fire pit
@@ -122,6 +131,7 @@ export const Cover2: React.FC<{ plate: string; title: readonly string[]; cta: st
           <div style={{ position: "absolute", top: card.top, left: MARGIN, width: card.w, height: card.h, borderRadius: 32, overflow: "hidden" }}>
             <Img src={staticFile("zerna2/genplan-soft.jpg")} style={{ position: "absolute", top: 0, height: card.h, width: iw, left: card.w / 2 - cx * scale }} />
           </div>
+          <HintPlate text={hint} centre={card.top + card.h / 2 + 40} />
           <Sticker text={cta} top={card.top + card.h + 44} />
         </>
       )}

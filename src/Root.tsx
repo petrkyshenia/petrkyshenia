@@ -54,14 +54,14 @@ export const RemotionRoot: React.FC = () => (
       component={Cover1}
       width={Z.W}
       height={Z.H}
-      defaultProps={{ accent: "А ВИ ГОТОВІ?", title: ["НОВИЙ ПРОЄКТ", "У КАРПАТАХ"], sub: "Всього 130 км від Львова" }}
+      defaultProps={{ accent: "А ВИ ГОТОВІ?", title: ["НОВИЙ ПРОЄКТ", "У КАРПАТАХ"], sub: "Всього 130 км від Львова", hint: Z.HINT }}
     />
     <Still
       id="ZernaCover2"
       component={Cover2}
       width={Z.W}
       height={Z.H}
-      defaultProps={{ plate: "ВАРТУЄ УВАГИ", title: ["НОВЕ КЛУБНЕ МІСТЕЧКО", "В КАРПАТАХ"], cta: "Дізнайтеся першими" }}
+      defaultProps={{ plate: "ВАРТУЄ УВАГИ", title: ["НОВЕ КЛУБНЕ МІСТЕЧКО", "В КАРПАТАХ"], cta: "Дізнайтеся першими", hint: Z.HINT }}
     />
   </>
 );
