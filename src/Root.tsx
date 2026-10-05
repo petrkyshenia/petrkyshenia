@@ -1,7 +1,8 @@
-import { Composition } from "remotion";
+import { Composition, Still } from "remotion";
 import "./fonts";
 import { Main } from "./Main";
 import { DURATION, FPS, H, W } from "./theme";
+import { Cover1, Cover2 } from "./zerna-cover/Cover";
 import { Teaser } from "./zerna/Teaser";
 import * as Z from "./zerna/theme";
 import { Teaser2 } from "./zerna2/Teaser2";
@@ -46,6 +47,21 @@ export const RemotionRoot: React.FC = () => (
       width={Z.W}
       height={Z.H}
       defaultProps={{ text: Z2.TEXT2, music: true }}
+    />
+    {/* Reels covers for the two teasers */}
+    <Still
+      id="ZernaCover1"
+      component={Cover1}
+      width={Z.W}
+      height={Z.H}
+      defaultProps={{ accent: "А ВИ ГОТОВІ?", title: ["НОВИЙ ПРОЄКТ", "У КАРПАТАХ"], sub: "Всього 130 км від Львова" }}
+    />
+    <Still
+      id="ZernaCover2"
+      component={Cover2}
+      width={Z.W}
+      height={Z.H}
+      defaultProps={{ plate: "ВАРТУЄ УВАГИ", title: ["КЛУБНЕ МІСТЕЧКО", "У КАРПАТАХ"], cta: "Дізнайтеся першими" }}
     />
   </>
 );
