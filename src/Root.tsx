@@ -7,20 +7,22 @@ import * as Z from "./zerna/theme";
 import { Teaser2 } from "./zerna2/Teaser2";
 import * as Z2 from "./zerna2/theme";
 
-// Drone shot of the site (September 2026). The light lands on the beat on what each line names.
+// Night render of the Zerna genplan, seen from above, panning left to right.
+// The light lands on the beat on what each line names.
 const picture: Z.Picture = {
-  src: "zerna/drone-site.jpg",
-  size: { w: 1500, h: 1125 },
-  cx: 640, // the houses in the middle of the frame
+  src: "zerna/genplan-night.jpg",
+  size: { w: 2000, h: 1121 },
+  cx: [820, 1250],
+  gain: 1.9, // a night render: the light has to lift it more than a daylight picture
   light: [
-    [224, -12], // ВАРТУЄ УВАГИ: the beam enters over the mountains
+    [224, -12], // ВАРТУЄ УВАГИ: the beam enters over the forest and the first houses
     [262, 42],
-    [276, 42], // ВСЬОГО 130 КМ ВІД ЛЬВОВА: the serpentine road
-    [284, 70],
-    [301, 70], // НА ВЕРШИНІ ГОРИ: the summit, with the warm leak
-    [309, 32],
-    [326, 32], // ЛИШЕ 24 БУДИНКИ: the houses
-    [334, 54],
+    [276, 42], // ВСЬОГО 130 КМ ВІД ЛЬВОВА: the road with the cars
+    [284, 51],
+    [301, 51], // НА ВЕРШИНІ ГОРИ: the top of the plan, with the warm leak
+    [309, 31],
+    [326, 31], // ЛИШЕ 24 БУДИНКИ: the cluster of houses below
+    [334, 61],
   ],
 };
 

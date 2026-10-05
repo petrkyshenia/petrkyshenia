@@ -24,7 +24,7 @@ const glyphs = (line: string, row: number, from: number, to: number): Glyph[] =>
 const LINE: React.CSSProperties = { display: "flex", justifyContent: "center", fontFamily: MURS, fontWeight: 900, lineHeight: 1.06, color: C.ivory };
 const GLYPH: React.CSSProperties = { display: "inline-block", whiteSpace: "pre", textShadow: "0 4px 30px rgba(5,26,18,0.5)" };
 
-/** 7.47–11.8 s: the drone shot in the dark, the light jumps on the beat to what each fact names, defocus to green. */
+/** 7.47–11.8 s: the genplan in the dark, a slow pan; the light jumps on the beat to what each fact names, defocus to green. */
 export const Reveal: React.FC<{ picture: Picture; reveal: readonly string[]; facts: readonly (readonly string[])[] }> = ({
   picture,
   reveal,
@@ -35,7 +35,7 @@ export const Reveal: React.FC<{ picture: Picture; reveal: readonly string[]; fac
   // one size for all facts, set by the widest line
   const factSize = fitSize(facts.flat(), MURS, 900, W * 0.84, 130);
 
-  // the drone shot in the dark; on every beat the warm light moves to what the text names
+  // the genplan in the dark; on every beat the warm light moves to what the text names
   const on = prog(frame, T.picture, T.picture + 12);
   const melt = prog(frame, T.defocus, T.logo + 6, inOut);
   const keys = picture.light;
@@ -44,7 +44,8 @@ export const Reveal: React.FC<{ picture: Picture; reveal: readonly string[]; fac
   const [f0, p0] = keys[Math.min(k, keys.length - 1)];
   const [f1, p1] = keys[Math.min(k + 1, keys.length - 1)];
   const p = f1 > f0 ? interpolate(frame, [f0, f1], [p0, p1], { easing: inOut, extrapolateLeft: "clamp", extrapolateRight: "clamp" }) : p0;
-  const pan = (picture.cx * H) / picture.size.h - W / 2;
+  const cx = interpolate(frame, [T.picture, T.logo + 6], picture.cx as [number, number], { easing: inOut, extrapolateRight: "clamp" });
+  const pan = (cx * H) / picture.size.h - W / 2;
   const zoom = interpolate(frame, [T.picture, T.logo + 6], [1, 1.08]);
   const tint = interpolateColors(frame, [T.picture, T.leak, T.logo], ["#FDD64C", "#FFE9B8", "#F3B97A"]);
 
@@ -57,7 +58,7 @@ export const Reveal: React.FC<{ picture: Picture; reveal: readonly string[]; fac
 
   return (
     <AbsoluteFill style={{ background: C.green }}>
-      <Sweep src={picture.src} size={picture.size} pan={pan} zoom={zoom} p={p} half={18} tint={tint} on={on} />
+      <Sweep src={picture.src} size={picture.size} pan={pan} zoom={zoom} p={p} half={18} tint={tint} on={on} gain={picture.gain} />
 
       {/* warm light leak, Sunny Yellow into Warm Sand */}
       <AbsoluteFill

@@ -70,10 +70,12 @@ export const TEXT: Variant = {
 export type Picture = {
   src: string;
   size: { w: number; h: number };
-  /** Picture x (source px) placed at the centre of the frame. */
-  cx: number;
+  /** Picture x (source px) at the centre of the frame: at the start and at the end of the section (a slow pan). */
+  cx: readonly [number, number];
   /** Where the light points: [frame, band position %] keyframes (see Sweep); it moves between them, holds on repeats. */
   light: readonly (readonly [number, number])[];
+  /** Brightness of the lit band (Sweep default 1.25). */
+  gain?: number;
 };
 
 export const crisp = Easing.bezier(0.16, 1, 0.3, 1);

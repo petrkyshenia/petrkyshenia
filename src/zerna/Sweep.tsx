@@ -15,12 +15,14 @@ export type SweepProps = {
   tint: string;
   /** 0..1: the light (and the faint picture) fades in and out. */
   on: number;
+  /** Brightness of the lit band; raise it for a night picture. */
+  gain?: number;
 };
 
 const FALLOFF = "radial-gradient(ellipse 90% 70% at 50% 50%, #000 45%, rgba(0,0,0,0.5) 80%, rgba(0,0,0,0.15) 100%)";
 
 /** A picture in the dark with one warm band of light crossing it: only fragments are ever visible. */
-export const Sweep: React.FC<SweepProps> = ({ src, size, pan, zoom, p, half, tint, on }) => {
+export const Sweep: React.FC<SweepProps> = ({ src, size, pan, zoom, p, half, tint, on, gain = 1.25 }) => {
   const w = (size.w * H) / size.h;
   const band = `linear-gradient(118deg, transparent ${p - half}%, rgba(0,0,0,0.6) ${p - (half * 5) / 12}%, #000 ${p}%, rgba(0,0,0,0.6) ${p + (half * 5) / 12}%, transparent ${p + half}%)`;
   const picture = (filter: string) => (
@@ -35,7 +37,7 @@ export const Sweep: React.FC<SweepProps> = ({ src, size, pan, zoom, p, half, tin
         {picture("brightness(0.06)")}
         <AbsoluteFill style={{ maskImage: FALLOFF, WebkitMaskImage: FALLOFF }}>
           <AbsoluteFill style={{ maskImage: band, WebkitMaskImage: band }}>
-            {picture("brightness(1.25) saturate(1.05)")}
+            {picture(`brightness(${gain}) saturate(1.05)`)}
             <AbsoluteFill style={{ background: tint, mixBlendMode: "multiply", opacity: 0.45 }} />
             <AbsoluteFill style={{ background: tint, mixBlendMode: "screen", opacity: 0.12 }} />
           </AbsoluteFill>
