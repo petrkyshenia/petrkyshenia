@@ -18,5 +18,5 @@ export const Beam: React.FC = () => {
       : interpolate(frame, [turn, end - 6], [86, 6], { easing: inOut, extrapolateRight: "clamp" });
   const tint = interpolateColors(frame, [T.beam, turn, end], ["#FDD64C", "#FFE9B8", "#F3B97A"]);
 
-  return <Sweep src="zerna2/genplan.jpg" size={{ w: 2000, h: 1123 }} pan={pan} zoom={zoom} p={p} half={24} tint={tint} on={on} />;
+  return <Sweep src="zerna2/genplan-soft.jpg" size={{ w: 2000, h: 1123 }} pan={pan} zoom={zoom} p={p} half={24} tint={tint} on={on} />;
 };

@@ -1,5 +1,5 @@
 import { AbsoluteFill, Img, staticFile } from "remotion";
-import { useFontsReady } from "../zerna/fonts";
+import { fitSize, useFontsReady } from "../zerna/fonts";
 import { C, EUKR, H, MURS, W } from "../zerna/theme";
 
 // Reels covers, 1080x1920, after the Zerna design code v1.0:
@@ -62,7 +62,7 @@ export const Cover1: React.FC<{ accent: string; title: readonly string[]; sub: s
     <AbsoluteFill style={{ background: C.green }}>
       <Background src="zerna-cover/bg-green-leaf.png" />
       <Img
-        src={staticFile("zerna/genplan-night.jpg")}
+        src={staticFile("zerna/genplan-night-soft.jpg")}
         style={{ position: "absolute", top, height: ph, width: pw, left: W / 2 - (cx * ph) / 1121 }}
       />
       {/* §7.6: text never sits on the photo without the green overlay; here it fades the photo in from the top */}
@@ -100,6 +100,8 @@ export const Cover2: React.FC<{ plate: string; title: readonly string[]; cta: st
   const scale = card.h / 1123;
   const iw = 2000 * scale;
   const cx = 1180;
+  // 64 px unless the longest line needs less to fit between the margins (§8 allows 52..64)
+  const size = ok ? Math.max(52, Math.floor(fitSize(title, MURS, 900, W - 2 * MARGIN, 64))) : 64;
   return (
     <AbsoluteFill style={{ background: C.green }}>
       <Background src="zerna-cover/bg-green-rhombus.png" />
@@ -112,13 +114,13 @@ export const Cover2: React.FC<{ plate: string; title: readonly string[]; cta: st
               {plate}
             </div>
             {title.map((l) => (
-              <div key={l} style={TITLE}>
+              <div key={l} style={{ ...TITLE, fontSize: size, whiteSpace: "nowrap" }}>
                 {l}
               </div>
             ))}
           </div>
           <div style={{ position: "absolute", top: card.top, left: MARGIN, width: card.w, height: card.h, borderRadius: 32, overflow: "hidden" }}>
-            <Img src={staticFile("zerna2/genplan.jpg")} style={{ position: "absolute", top: 0, height: card.h, width: iw, left: card.w / 2 - cx * scale }} />
+            <Img src={staticFile("zerna2/genplan-soft.jpg")} style={{ position: "absolute", top: 0, height: card.h, width: iw, left: card.w / 2 - cx * scale }} />
           </div>
           <Sticker text={cta} top={card.top + card.h + 44} />
         </>

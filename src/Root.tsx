@@ -11,7 +11,7 @@ import * as Z2 from "./zerna2/theme";
 // Night render of the Zerna genplan, seen from above, panning left to right.
 // The light lands on the beat on what each line names.
 const picture: Z.Picture = {
-  src: "zerna/genplan-night.jpg",
+  src: "zerna/genplan-night-soft.jpg", // blurred: phase 0 shows silhouettes only (scripts/zerna-soft.py)
   size: { w: 2000, h: 1121 },
   cx: [820, 1250],
   gain: 1.9, // a night render: the light has to lift it more than a daylight picture
@@ -61,7 +61,7 @@ export const RemotionRoot: React.FC = () => (
       component={Cover2}
       width={Z.W}
       height={Z.H}
-      defaultProps={{ plate: "ВАРТУЄ УВАГИ", title: ["КЛУБНЕ МІСТЕЧКО", "У КАРПАТАХ"], cta: "Дізнайтеся першими" }}
+      defaultProps={{ plate: "ВАРТУЄ УВАГИ", title: ["НОВЕ КЛУБНЕ МІСТЕЧКО", "В КАРПАТАХ"], cta: "Дізнайтеся першими" }}
     />
   </>
 );
