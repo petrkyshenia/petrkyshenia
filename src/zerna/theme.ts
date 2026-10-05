@@ -57,7 +57,7 @@ export type Variant = {
 // Approved text (variant A). Tone: "whisper", formal "ви".
 export const TEXT: Variant = {
   words: ["А", "ВИ", "ГОТОВІ?", "НОВИЙ", "ПРОЄКТ", "У", "КАРПАТАХ"],
-  reveal: ["ВАРТУЄ", "УВАГИ"],
+  reveal: ["ВАРТО", "УВАГИ"],
   facts: [
     ["ВСЬОГО", "130 КМ", "ВІД ЛЬВОВА"],
     ["НА ВЕРШИНІ", "ГОРИ"],

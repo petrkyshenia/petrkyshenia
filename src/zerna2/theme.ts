@@ -32,7 +32,7 @@ export type Text2 = {
 
 // Approved text (tone "whisper", formal "ви"); the question repeats teaser 1 so the posts read as a series.
 export const TEXT2: Text2 = {
-  poster: "ВАРТУЄ УВАГИ",
+  poster: "ВАРТО УВАГИ",
   line1: "А ВИ",
   line2: "ГОТОВІ?",
   row: "КЛУБНЕ МІСТЕЧКО · КАРПАТИ",

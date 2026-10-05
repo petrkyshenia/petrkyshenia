@@ -16,7 +16,7 @@ const picture: Z.Picture = {
   cx: [820, 1250],
   gain: 1.9, // a night render: the light has to lift it more than a daylight picture
   light: [
-    [224, -12], // ВАРТУЄ УВАГИ: the beam enters over the forest and the first houses
+    [224, -12], // ВАРТО УВАГИ: the beam enters over the forest and the first houses
     [262, 42],
     [276, 42], // ВСЬОГО 130 КМ ВІД ЛЬВОВА: the road with the cars
     [284, 51],
@@ -61,7 +61,7 @@ export const RemotionRoot: React.FC = () => (
       component={Cover2}
       width={Z.W}
       height={Z.H}
-      defaultProps={{ plate: "ВАРТУЄ УВАГИ", title: ["НОВЕ КЛУБНЕ МІСТЕЧКО", "В КАРПАТАХ"], cta: "Дізнайтеся першими", hint: Z.HINT }}
+      defaultProps={{ plate: "ВАРТО УВАГИ", title: ["НОВЕ КЛУБНЕ МІСТЕЧКО", "В КАРПАТАХ"], cta: "Дізнайтеся першими", hint: Z.HINT }}
     />
   </>
 );
