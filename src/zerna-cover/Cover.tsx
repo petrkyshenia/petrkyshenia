@@ -24,10 +24,10 @@ const Logo: React.FC = () => (
   </div>
 );
 
-/** §7.4 subtitle plate over the blurred render: green, ivory e-Ukraine 32, radius 14, side padding 0.75 x line height. */
+/** §7.4 subtitle plate over the blurred render: green, ivory e-Ukraine (40 px, a step above the 32 px sub), radius 14, side padding 0.75 x line height. */
 const HintPlate: React.FC<{ text: string; centre: number }> = ({ text, centre }) => (
   <div style={{ position: "absolute", top: centre, left: 0, right: 0, display: "flex", justifyContent: "center", transform: "translateY(-50%)" }}>
-    <div style={{ ...SUB, background: C.green, borderRadius: 14, padding: `14px ${Math.round(0.75 * 32 * 1.3)}px 12px` }}>{text}</div>
+    <div style={{ ...SUB, fontSize: 40, background: C.green, borderRadius: 14, padding: `16px ${Math.round(0.75 * 40 * 1.3)}px 14px` }}>{text}</div>
   </div>
 );
 

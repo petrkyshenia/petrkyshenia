@@ -7,8 +7,8 @@ The day render gets more because its houses are about twice as large in the fram
 from PIL import Image, ImageFilter
 
 SOFT = [
-    ("public/zerna/genplan-night.jpg", "public/zerna/genplan-night-soft.jpg", 6.5),
-    ("public/zerna2/genplan.jpg", "public/zerna2/genplan-soft.jpg", 9),
+    ("public/zerna/genplan-night.jpg", "public/zerna/genplan-night-soft.jpg", 5.75),
+    ("public/zerna2/genplan.jpg", "public/zerna2/genplan-soft.jpg", 8),
 ]
 
 for src, dst, radius in SOFT:

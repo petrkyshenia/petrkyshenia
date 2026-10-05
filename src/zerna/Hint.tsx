@@ -11,7 +11,7 @@ export const Hint: React.FC<{ opacity: number }> = ({ opacity }) => (
       textAlign: "center",
       fontFamily: EUKR,
       fontWeight: 300,
-      fontSize: 38,
+      fontSize: 46,
       letterSpacing: "0.04em",
       color: C.ivory,
       textShadow: "0 2px 18px rgba(5,26,18,0.9), 0 0 6px rgba(5,26,18,0.6)",
