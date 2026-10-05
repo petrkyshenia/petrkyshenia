@@ -69,8 +69,11 @@ export const TEXT: Variant = {
 
 export type Picture = {
   src: string;
-  /** The one sharp detail, in % of the frame. */
-  focus: { x: number; y: number; r: number };
+  size: { w: number; h: number };
+  /** Picture x (source px) placed at the centre of the frame. */
+  cx: number;
+  /** Where the light points: [frame, band position %] keyframes (see Sweep); it moves between them, holds on repeats. */
+  light: readonly (readonly [number, number])[];
 };
 
 export const crisp = Easing.bezier(0.16, 1, 0.3, 1);

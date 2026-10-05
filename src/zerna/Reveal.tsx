@@ -1,35 +1,7 @@
-import { AbsoluteFill, Img, interpolate, random, staticFile, useCurrentFrame } from "remotion";
+import { AbsoluteFill, interpolate, interpolateColors, random, useCurrentFrame } from "remotion";
 import { fitSize } from "./fonts";
-import { C, MURS, type Picture, T, W, easeIn, flicker, flickerFast, inOut, prog } from "./theme";
-
-/** Blurred picture with one sharp detail, slow push-in, brand-tinted shadows. */
-const Photo: React.FC<{ picture: Picture; blur: number; scale: number }> = ({ picture, blur, scale }) => {
-  const { x, y, r } = picture.focus;
-  // `circle` takes a length, not a percentage: r is a share of the frame width
-  const mask = `radial-gradient(circle ${(r / 100) * W}px at ${x}% ${y}%, #000 0%, #000 45%, transparent 100%)`;
-  const img: React.CSSProperties = { width: "100%", height: "100%", objectFit: "cover" };
-  return (
-    <AbsoluteFill style={{ transform: `scale(${scale})` }}>
-      <AbsoluteFill style={{ filter: `blur(${blur}px)`, transform: "scale(1.08)" }}>
-        <Img src={staticFile(picture.src)} style={img} />
-      </AbsoluteFill>
-      {/* the one sharp detail: "blur the overall look, never the quality" */}
-      <AbsoluteFill
-        style={{
-          maskImage: mask,
-          WebkitMaskImage: mask,
-          opacity: interpolate(blur, [14, 40], [1, 0], { extrapolateLeft: "clamp", extrapolateRight: "clamp" }),
-        }}
-      >
-        <Img src={staticFile(picture.src)} style={img} />
-      </AbsoluteFill>
-      <AbsoluteFill style={{ background: C.green, mixBlendMode: "multiply", opacity: 0.28 }} />
-      <AbsoluteFill
-        style={{ background: `radial-gradient(ellipse 85% 70% at 50% 45%, transparent 40%, ${C.greenDeep} 100%)`, opacity: 0.7 }}
-      />
-    </AbsoluteFill>
-  );
-};
+import { Sweep } from "./Sweep";
+import { C, H, MURS, type Picture, T, W, easeIn, flicker, flickerFast, inOut, prog } from "./theme";
 
 type Glyph = { ch: string; at: number; dx: number; dy: number; dz: number; rx: number; ry: number; rz: number; lag: number };
 
@@ -52,7 +24,7 @@ const glyphs = (line: string, row: number, from: number, to: number): Glyph[] =>
 const LINE: React.CSSProperties = { display: "flex", justifyContent: "center", fontFamily: MURS, fontWeight: 900, lineHeight: 1.06, color: C.ivory };
 const GLYPH: React.CSSProperties = { display: "inline-block", whiteSpace: "pre", textShadow: "0 4px 30px rgba(5,26,18,0.5)" };
 
-/** 7.47–11.8 s: picture rises out of green, brand line flickers in and flies apart, three facts on the beat, defocus to green. */
+/** 7.47–11.8 s: the drone shot in the dark, the light jumps on the beat to what each fact names, defocus to green. */
 export const Reveal: React.FC<{ picture: Picture; reveal: readonly string[]; facts: readonly (readonly string[])[] }> = ({
   picture,
   reveal,
@@ -63,12 +35,18 @@ export const Reveal: React.FC<{ picture: Picture; reveal: readonly string[]; fac
   // one size for all facts, set by the widest line
   const factSize = fitSize(facts.flat(), MURS, 900, W * 0.84, 130);
 
-  // the reference lifts its footage out of black top-first over ~1 s
-  const wipe = prog(frame, T.picture, T.picture + 28, (t) => t);
-  const edge = interpolate(wipe, [0, 1], [-5, 140]);
+  // the drone shot in the dark; on every beat the warm light moves to what the text names
+  const on = prog(frame, T.picture, T.picture + 12);
   const melt = prog(frame, T.defocus, T.logo + 6, inOut);
-  const blur = interpolate(melt, [0, 1], [14, 70]);
-  const push = interpolate(frame, [T.picture, T.logo + 6], [1, 1.07]);
+  const keys = picture.light;
+  const next = keys.findIndex(([f]) => f > frame);
+  const k = next === -1 ? keys.length - 1 : Math.max(0, next - 1);
+  const [f0, p0] = keys[Math.min(k, keys.length - 1)];
+  const [f1, p1] = keys[Math.min(k + 1, keys.length - 1)];
+  const p = f1 > f0 ? interpolate(frame, [f0, f1], [p0, p1], { easing: inOut, extrapolateLeft: "clamp", extrapolateRight: "clamp" }) : p0;
+  const pan = (picture.cx * H) / picture.size.h - W / 2;
+  const zoom = interpolate(frame, [T.picture, T.logo + 6], [1, 1.08]);
+  const tint = interpolateColors(frame, [T.picture, T.leak, T.logo], ["#FDD64C", "#FFE9B8", "#F3B97A"]);
 
   const leak = prog(frame, T.leak - 8, T.leak + 6) * (1 - prog(frame, T.leak + 18, T.streak + 6, inOut));
   const streak = prog(frame, T.streak, T.streak + 3) * (1 - prog(frame, T.streak + 4, T.streak + 11));
@@ -79,28 +57,21 @@ export const Reveal: React.FC<{ picture: Picture; reveal: readonly string[]; fac
 
   return (
     <AbsoluteFill style={{ background: C.green }}>
-      <AbsoluteFill
-        style={{
-          maskImage: `linear-gradient(to bottom, #000 ${edge - 40}%, transparent ${edge}%)`,
-          WebkitMaskImage: `linear-gradient(to bottom, #000 ${edge - 40}%, transparent ${edge}%)`,
-        }}
-      >
-        <Photo picture={picture} blur={blur} scale={push} />
-      </AbsoluteFill>
+      <Sweep src={picture.src} size={picture.size} pan={pan} zoom={zoom} p={p} half={18} tint={tint} on={on} />
 
       {/* warm light leak, Sunny Yellow into Warm Sand */}
       <AbsoluteFill
         style={{
-          background: `radial-gradient(ellipse 80% 60% at 72% 28%, ${C.yellow} 0%, rgba(192,175,148,0.55) 45%, transparent 80%)`,
+          background: `radial-gradient(ellipse 80% 45% at 50% 14%, ${C.yellow} 0%, rgba(192,175,148,0.55) 45%, transparent 80%)`,
           mixBlendMode: "screen",
           opacity: 0.55 * leak,
         }}
       />
       <AbsoluteFill style={{ background: "#F3B97A", mixBlendMode: "soft-light", opacity: 0.5 * leak }} />
 
-      {/* text sits low so the sharp detail above stays free; it blurs away with the picture */}
+      {/* text sits in the upper third so the lit houses and road below stay free; it blurs away with the picture */}
       <AbsoluteFill style={{ perspective: 1400, filter: `blur(${melt * 14}px)`, opacity: 1 - melt }}>
-        <div style={{ position: "absolute", left: 0, right: 0, top: "62%", transform: "translateY(-50%)" }}>
+        <div style={{ position: "absolute", left: 0, right: 0, top: "27%", transform: "translateY(-50%)" }}>
           {current < 0 &&
             rows.map((row, r) => (
               <div key={r} style={{ ...LINE, fontSize: brandSize }}>

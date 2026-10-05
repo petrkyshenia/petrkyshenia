@@ -7,8 +7,22 @@ import * as Z from "./zerna/theme";
 import { Teaser2 } from "./zerna2/Teaser2";
 import * as Z2 from "./zerna2/theme";
 
-// Drone shot of the site; the one sharp detail is the plot at the bend of the road (marked by the client).
-const picture: Z.Picture = { src: "zerna/picture-placeholder.jpg", focus: { x: 60, y: 37, r: 17 } };
+// Drone shot of the site (September 2026). The light lands on the beat on what each line names.
+const picture: Z.Picture = {
+  src: "zerna/drone-site.jpg",
+  size: { w: 1500, h: 1125 },
+  cx: 640, // the houses in the middle of the frame
+  light: [
+    [224, -12], // ВАРТУЄ УВАГИ: the beam enters over the mountains
+    [262, 42],
+    [276, 42], // ВСЬОГО 130 КМ ВІД ЛЬВОВА: the serpentine road
+    [284, 70],
+    [301, 70], // НА ВЕРШИНІ ГОРИ: the summit, with the warm leak
+    [309, 32],
+    [326, 32], // ЛИШЕ 24 БУДИНКИ: the houses
+    [334, 54],
+  ],
+};
 
 export const RemotionRoot: React.FC = () => (
   <>
